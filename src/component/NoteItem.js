@@ -1,17 +1,10 @@
 import React from "react";
 import { useContext } from "react";
-import { MdDelete, MdEdit } from "react-icons/md";
 import { AppContext } from "../Helper/Context";
+import { MdDelete, MdEdit, MdSave } from "react-icons/md";
 
 export const NoteItem = () => {
-    const { dataList, setDataList } = useContext(AppContext);
-
-    const handleDelete = (id) => {
-        const tempDataList = dataList.filter((list) => {
-            return list.id !== id;
-        });
-        setDataList(tempDataList);
-    };
+    const { dataList, handleEdit, handleDelete } = useContext(AppContext);
     return (
         <>
             {dataList.map((list, ind) => {
@@ -29,10 +22,13 @@ export const NoteItem = () => {
                             </div>
                         </div>
                         <div className="icon-container">
-                            <span className="edit-icon">
+                            <span onClick={() => handleEdit(list.id)} className="edit-icon">
                                 <MdEdit className="icon" />
                             </span>
-                            <span onClick={() => handleDelete(list.id)} className="dele-icon">
+                            <span className="save-icon">
+                                <MdSave className="icon" />
+                            </span>
+                            <span onClick={() => handleDelete(list.id, list.name)} className="dele-icon">
                                 <MdDelete className="icon" />
                             </span>
                         </div>
