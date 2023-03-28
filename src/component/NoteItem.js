@@ -31,7 +31,10 @@ export const NoteItem = () => {
                             <span onClick={() => handleEdit(list.id)} className="edit-icon">
                                 <MdEdit className="icon" />
                             </span>
-                            <span onClick={() => handleSave(list.id)} className="save-icon">
+                            <span
+                                onClick={() => handleSave(list.id)}
+                                className={`save-icon ${list.type ? list.type : ""}`}
+                            >
                                 <MdSave className="icon" />
                             </span>
                             <span onClick={() => handleDelete(list.id, list.name)} className="dele-icon">

@@ -87,10 +87,10 @@ function App() {
             return list.id === id;
         });
         setMemoryList([...memoryList, ...tempSaveData]);
-        const tempDeleteData = dataList.filter((list) => {
-            return list.id !== id;
+        const tempDataList = dataList.map((list) => {
+            return list.id === id ? { ...list, type: "success" } : list;
         });
-        setDataList(tempDeleteData);
+        setDataList(tempDataList);
     };
 
     // Clear All Handle
