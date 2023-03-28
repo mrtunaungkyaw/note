@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 
 export const NoteForm = () => {
-    const { name, amount, edit, confirm, dataList, handleName, handleAmount, handleSubmit, handleClearAll } =
+    const { name, amount, edit, dataList, handleName, handleAmount, handleSubmit, handleClearAll } =
         useContext(AppContext);
 
     return (

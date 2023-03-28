@@ -1,10 +1,10 @@
 import "./App.css";
-import { NoteForm } from "./component/NoteForm";
 import { useEffect, useState } from "react";
 import { AppContext } from "./Helper/Context";
 import { v4 as uuid } from "uuid";
-import { Alert } from "./component/Alert";
-import { ConfirmBox } from "./component/ConfirmBox";
+import { Main } from "./Pages/Main";
+import { Navbar } from "./component/Navbar";
+import { List } from "./Pages/List";
 
 const localData = localStorage.getItem("dataList") ? JSON.parse(localStorage.getItem("dataList")) : [];
 
@@ -21,6 +21,8 @@ function App() {
     const [edit, setEdit] = useState({ show: false });
     // Confirm Box Data
     const [confirm, setConfirm] = useState({ show: false });
+    // Navbar Handle
+    const [navbar, setNavbar] = useState({ home: true });
 
     // Name Handle
     const handleName = (e) => {
@@ -30,6 +32,16 @@ function App() {
     // Amount Handle
     const handleAmount = (e) => {
         setAmount(e.target.value);
+    };
+
+    // Navbar Home Handle
+    const handleNavHome = () => {
+        setNavbar({ home: true });
+    };
+
+    // Navbar List Handle
+    const handleNavList = () => {
+        setNavbar({ home: false });
     };
 
     // Alert Handle
@@ -56,11 +68,13 @@ function App() {
         setConfirm({ show: true, id, text: `Are You Sure Delete This Item ("${name}") ` });
     };
 
+    // Confirm Cancle Handle
     const handleConfirmCancle = () => {
         setConfirm({ show: false });
         handleAlert({ show: true, type: "danger", text: "Cancle Delete" });
     };
 
+    // Confirm Ok Handle
     const handleConfirmOk = () => {
         const tempDeleteData = dataList.filter((list) => {
             return list.id !== confirm.id;
@@ -70,6 +84,7 @@ function App() {
         handleAlert({ type: "success", text: "Success Delete Item" });
     };
 
+    // Submit Handle
     const handleSubmit = (e) => {
         e.preventDefault();
         if (name !== "" && amount > 0) {
@@ -95,60 +110,47 @@ function App() {
         }
     };
 
+    // Clear All Handle
     const handleClearAll = () => {
         setDataList([]);
         handleAlert({ type: "success", text: "Success Clear All Item" });
     };
 
+    // Local Storage Set
     useEffect(() => {
         console.log("effect");
         localStorage.setItem("dataList", JSON.stringify(dataList));
-    });
+    }, [dataList]);
 
     return (
-        <div className="App">
-            <div className="container">
-                <div className="alert-container">{alert.show && <Alert type={alert.type} text={alert.text} />}</div>
-                <div className="header">
-                    <h1>Note</h1>
-                </div>
-                <AppContext.Provider
-                    value={{
-                        name,
-                        amount,
-                        dataList,
-                        edit,
-                        confirm,
-                        setName,
-                        setAmount,
-                        setDataList,
-                        handleName,
-                        handleAmount,
-                        handleEdit,
-                        handleDelete,
-                        handleConfirmCancle,
-                        handleConfirmOk,
-                        handleClearAll,
-                        handleSubmit,
-                    }}
-                >
-                    <main className="main-container">
-                        <NoteForm />
-                    </main>
-                    {confirm.show && <ConfirmBox />}
-                </AppContext.Provider>
-                <div className="total">
-                    <h1>
-                        Total :
-                        <span>
-                            {dataList.reduce((acc, curr) => {
-                                return (acc += parseInt(curr.amount));
-                            }, 0)}
-                        </span>
-                    </h1>
-                </div>
+        <AppContext.Provider
+            value={{
+                name,
+                amount,
+                dataList,
+                edit,
+                confirm,
+                alert,
+                setName,
+                setAmount,
+                setDataList,
+                handleName,
+                handleAmount,
+                handleNavHome,
+                handleNavList,
+                handleEdit,
+                handleDelete,
+                handleConfirmCancle,
+                handleConfirmOk,
+                handleClearAll,
+                handleSubmit,
+            }}
+        >
+            <div className="App">
+                <Navbar />
+                {navbar.home ? <Main /> : <List />}
             </div>
-        </div>
+        </AppContext.Provider>
     );
 }
 
