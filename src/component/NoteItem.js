@@ -2,16 +2,22 @@ import React from "react";
 import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 import { MdDelete, MdEdit, MdSave } from "react-icons/md";
+import { Date } from "./Date";
 
 export const NoteItem = () => {
-    const { dataList, handleEdit, handleDelete } = useContext(AppContext);
+    const { dataList, handleEdit, handleDelete, handleSave } = useContext(AppContext);
     return (
         <>
             {dataList.map((list, ind) => {
                 return (
                     <li key={list.id} className="info-container">
                         <div className="info">
-                            <span>{ind + 1}</span>
+                            <div className="number">
+                                <span>{ind + 1}</span>
+                            </div>
+                            <div className="time">
+                                <Date list={list} />
+                            </div>
                             <div className="item-name">
                                 <span>{list.name}</span>
                             </div>
@@ -25,7 +31,7 @@ export const NoteItem = () => {
                             <span onClick={() => handleEdit(list.id)} className="edit-icon">
                                 <MdEdit className="icon" />
                             </span>
-                            <span className="save-icon">
+                            <span onClick={() => handleSave(list.id)} className="save-icon">
                                 <MdSave className="icon" />
                             </span>
                             <span onClick={() => handleDelete(list.id, list.name)} className="dele-icon">

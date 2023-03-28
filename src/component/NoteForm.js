@@ -47,11 +47,11 @@ export const NoteForm = () => {
                 <div className="clear-save-container">
                     <button onClick={handleClearAll} className="btn clear-all-btn">
                         Clear All
-                        <MdDelete className="clear-icon" />
+                        <MdDelete className="clear-all-icon" />
                     </button>
                     <button className="btn save-all-btn">
                         Save All
-                        <MdSend className="clear-icon" />
+                        <MdSend className="save-all-icon" />
                     </button>
                 </div>
             )}

@@ -7,22 +7,35 @@ import { Navbar } from "./component/Navbar";
 import { List } from "./Pages/List";
 
 const localData = localStorage.getItem("dataList") ? JSON.parse(localStorage.getItem("dataList")) : [];
+const memoryData = localStorage.getItem("memory") ? JSON.parse(localStorage.getItem("memory")) : [];
 
 function App() {
-    // Main Data
+    // Main State
     const [dataList, setDataList] = useState(localData);
-    // Name Data
+    // Memory Data
+    const [memoryList, setMemoryList] = useState(memoryData);
+    // Name State
     const [name, setName] = useState("");
-    // Amount Data
+    // Amount State
     const [amount, setAmount] = useState("");
-    // Alert Data
+    // Alert State
     const [alert, setAlert] = useState({ show: false });
-    // Edit Data
+    // Edit State
     const [edit, setEdit] = useState({ show: false });
-    // Confirm Box Data
+    // Confirm Box State
     const [confirm, setConfirm] = useState({ show: false });
-    // Navbar Handle
+    // Navbar State
     const [navbar, setNavbar] = useState({ home: true });
+
+    // Date Handle
+    const handleDate = () => {
+        const date = new Date();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const second = date.getSeconds();
+        const currentTime = `${hour}:${minute}:${second}`;
+        return currentTime;
+    };
 
     // Name Handle
     const handleName = (e) => {
@@ -68,6 +81,24 @@ function App() {
         setConfirm({ show: true, id, text: `Are You Sure Delete This Item ("${name}") ` });
     };
 
+    // Save Handle
+    const handleSave = (id) => {
+        const tempSaveData = dataList.filter((list) => {
+            return list.id === id;
+        });
+        setMemoryList([...memoryList, ...tempSaveData]);
+        const tempDeleteData = dataList.filter((list) => {
+            return list.id !== id;
+        });
+        setDataList(tempDeleteData);
+    };
+
+    // Clear All Handle
+    const handleClearAll = () => {
+        setDataList([]);
+        handleAlert({ type: "success", text: "Success Clear All Item" });
+    };
+
     // Confirm Cancle Handle
     const handleConfirmCancle = () => {
         setConfirm({ show: false });
@@ -90,13 +121,13 @@ function App() {
         if (name !== "" && amount > 0) {
             if (edit.show) {
                 const tempEditData = dataList.map((list) => {
-                    return list.id === edit.id ? { ...list, name, amount } : list;
+                    return list.id === edit.id ? { ...list, name, amount, editTime: handleDate() } : list;
                 });
                 setDataList(tempEditData);
                 setEdit({ show: false });
                 handleAlert({ type: "success", text: "Item Edit" });
             } else {
-                const tempDataList = { id: uuid(), name, amount };
+                const tempDataList = { id: uuid(), name, amount, setTime: handleDate() };
                 setDataList([...dataList, tempDataList]);
                 handleAlert({ type: "success", text: "Item Added" });
             }
@@ -110,17 +141,14 @@ function App() {
         }
     };
 
-    // Clear All Handle
-    const handleClearAll = () => {
-        setDataList([]);
-        handleAlert({ type: "success", text: "Success Clear All Item" });
-    };
-
     // Local Storage Set
     useEffect(() => {
-        console.log("effect");
         localStorage.setItem("dataList", JSON.stringify(dataList));
     }, [dataList]);
+
+    useEffect(() => {
+        localStorage.setItem("memoryList", JSON.stringify(memoryList));
+    }, [memoryList]);
 
     return (
         <AppContext.Provider
@@ -134,15 +162,17 @@ function App() {
                 setName,
                 setAmount,
                 setDataList,
-                handleName,
-                handleAmount,
                 handleNavHome,
                 handleNavList,
+                handleName,
+                handleAmount,
+                handleDate,
                 handleEdit,
                 handleDelete,
+                handleSave,
+                handleClearAll,
                 handleConfirmCancle,
                 handleConfirmOk,
-                handleClearAll,
                 handleSubmit,
             }}
         >
