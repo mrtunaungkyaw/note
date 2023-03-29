@@ -7,7 +7,7 @@ import { Navbar } from "./component/Navbar";
 import { List } from "./Pages/List";
 
 const localData = localStorage.getItem("dataList") ? JSON.parse(localStorage.getItem("dataList")) : [];
-const memoryData = localStorage.getItem("memory") ? JSON.parse(localStorage.getItem("memory")) : [];
+const memoryData = localStorage.getItem("memoryList") ? JSON.parse(localStorage.getItem("memoryList")) : [];
 
 function App() {
     // Main State
