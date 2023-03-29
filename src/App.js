@@ -91,6 +91,7 @@ function App() {
             return list.id === id ? { ...list, type: "success" } : list;
         });
         setDataList(tempDataList);
+        handleAlert({ type: "success", text: "Success Save Item" });
     };
 
     // Clear All Handle
@@ -125,11 +126,11 @@ function App() {
                 });
                 setDataList(tempEditData);
                 setEdit({ show: false });
-                handleAlert({ type: "success", text: "Item Edit" });
+                handleAlert({ type: "success", text: "Success Edit Item" });
             } else {
                 const tempDataList = { id: uuid(), name, amount, setTime: handleDate() };
                 setDataList([...dataList, tempDataList]);
-                handleAlert({ type: "success", text: "Item Added" });
+                handleAlert({ type: "success", text: "Success Add Item" });
             }
             setName("");
             setAmount("");
