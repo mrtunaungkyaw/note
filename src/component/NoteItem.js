@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 import { MdDelete, MdEdit, MdSave } from "react-icons/md";
-import { Date } from "./Date";
+import { SetTime } from "./Date";
 
 export const NoteItem = () => {
     const { dataList, handleEdit, handleDelete, handleSave } = useContext(AppContext);
@@ -16,7 +16,7 @@ export const NoteItem = () => {
                                 <span>{ind + 1}</span>
                             </div>
                             <div className="time">
-                                <Date list={list} />
+                                <SetTime list={list} />
                             </div>
                             <div className="item-name">
                                 <span>{list.name}</span>

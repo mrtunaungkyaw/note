@@ -385,6 +385,21 @@
     color: var(--mainRed);
 }
 
+.memory-list-container {
+    width: 90%;
+    margin: 0 auto;
+    background-color: var(--mainBlack);
+}
+
+.memory-list-container ul {
+    list-style: none;
+    color: white;
+}
+
+.memory-list {
+    font-size: 20px;
+}
+
 @media screen and (max-width: 992px) {
     .number,
     .time {

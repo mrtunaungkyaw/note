@@ -28,13 +28,14 @@ function App() {
     const [navbar, setNavbar] = useState({ home: true });
 
     // Date Handle
+    // const handleTime = () => {
+    //     const time = new Date().toLocaleTimeString("en-Us");
+    //     return time;
+    // };
+
     const handleDate = () => {
-        const date = new Date();
-        const hour = date.getHours();
-        const minute = date.getMinutes();
-        const second = date.getSeconds();
-        const currentTime = `${hour}:${minute}:${second}`;
-        return currentTime;
+        const date = new Date().toJSON();
+        return date;
     };
 
     // Name Handle
@@ -122,13 +123,13 @@ function App() {
         if (name !== "" && amount > 0) {
             if (edit.show) {
                 const tempEditData = dataList.map((list) => {
-                    return list.id === edit.id ? { ...list, name, amount, editTime: handleDate() } : list;
+                    return list.id === edit.id ? { ...list, name, amount, editDate: handleDate() } : list;
                 });
                 setDataList(tempEditData);
                 setEdit({ show: false });
                 handleAlert({ type: "success", text: "Success Edit Item" });
             } else {
-                const tempDataList = { id: uuid(), name, amount, setTime: handleDate() };
+                const tempDataList = { id: uuid(), name, amount, date: handleDate() };
                 setDataList([...dataList, tempDataList]);
                 handleAlert({ type: "success", text: "Success Add Item" });
             }
@@ -157,6 +158,7 @@ function App() {
                 name,
                 amount,
                 dataList,
+                memoryList,
                 edit,
                 confirm,
                 alert,
@@ -167,7 +169,6 @@ function App() {
                 handleNavList,
                 handleName,
                 handleAmount,
-                handleDate,
                 handleEdit,
                 handleDelete,
                 handleSave,
