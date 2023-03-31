@@ -27,12 +27,6 @@ function App() {
     // Navbar State
     const [navbar, setNavbar] = useState({ home: true });
 
-    // Date Handle
-    // const handleTime = () => {
-    //     const time = new Date().toLocaleTimeString("en-Us");
-    //     return time;
-    // };
-
     const handleDate = () => {
         const date = new Date().toJSON();
         return date;
@@ -143,6 +137,10 @@ function App() {
         }
     };
 
+    const handleDel = () => {
+        setMemoryList([]);
+    };
+
     // Local Storage Set
     useEffect(() => {
         localStorage.setItem("dataList", JSON.stringify(dataList));
@@ -176,6 +174,7 @@ function App() {
                 handleConfirmCancle,
                 handleConfirmOk,
                 handleSubmit,
+                handleDel,
             }}
         >
             <div className="App">

@@ -3,6 +3,7 @@
     --pureWhite: #ffffff;
     --mainBlack: #000000;
     --mainRed: #d72323;
+    --mainBlue: #0c4da2;
 }
 
 * {
@@ -385,25 +386,68 @@
     color: var(--mainRed);
 }
 
+/* Memory List */
+
 .memory-list-container {
     width: 90%;
+    height: 93vh;
+    overflow-x: auto;
     margin: 0 auto;
-    background-color: var(--mainBlack);
-}
-
-.memory-list-container ul {
-    list-style: none;
-    color: white;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .memory-list {
+    flex: 0 0 28%;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    height: 150px;
+    background-color: var(--pureWhite);
+    box-shadow: 8px 8px 3px rgba(0, 0, 0, 0.12), 8px 8px 2px rgba(0, 0, 0, 0.24);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.memory-date-time-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--mainBlack);
+}
+
+.memory-date-time-container span {
+    color: var(--mainRed);
+}
+
+.memory-name-container,
+.memory-amount-container {
     font-size: 20px;
+    font-weight: bold;
+    color: var(--mainBlack);
+    align-self: center;
+}
+
+.memory-name-container {
+    background-color: var(--mainWhite);
+    padding: 0 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.memory-amount-container span {
+    color: var(--mainRed);
 }
 
 @media screen and (max-width: 992px) {
     .number,
     .time {
         font-size: 14px;
+    }
+    .memory-list {
+        flex: 0 0 45%;
     }
 }
 @media screen and (max-width: 768px) {
@@ -428,6 +472,9 @@
     }
     .icon-container {
         flex: 0 0 40%;
+    }
+    .memory-list {
+        flex: 0 0 100%;
     }
 }
 @media screen and (max-width: 576px) {
@@ -476,5 +523,8 @@
     }
     .confirm {
         padding: 1rem;
+    }
+    .memory-list-container {
+        width: 95%;
     }
 }

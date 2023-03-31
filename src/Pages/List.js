@@ -1,29 +1,32 @@
 import React, { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 import { SetDate, SetTime } from "../component/Date";
+import { DatePick } from "../component/DatePick";
 
 export const List = () => {
-    const { memoryList } = useContext(AppContext);
+    const { memoryList, handleDel } = useContext(AppContext);
     return (
-        <div className="memory-list-container">
-            <ul>
+        <div>
+            <DatePick />
+            <div className="memory-list-container">
+                {/* <button onClick={handleDel}>Del</button> */}
                 {memoryList.map((list) => {
                     return (
-                        <li className="memory-list" key={list.id}>
-                            <div>
-                                <SetDate list={list} />
+                        <div className="memory-list" key={list.id}>
+                            <div className="memory-date-time-container">
                                 <SetTime list={list} />
+                                <SetDate list={list} />
                             </div>
-                            <div>
+                            <div className="memory-name-container">
                                 <span>{list.name}</span>
                             </div>
-                            <div>
-                                <span>{list.amount}</span>
+                            <div className="memory-amount-container">
+                                <span>{list.amount}</span> Kyat
                             </div>
-                        </li>
+                        </div>
                     );
                 })}
-            </ul>
+            </div>
         </div>
     );
 };
