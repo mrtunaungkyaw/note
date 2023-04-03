@@ -388,57 +388,75 @@
 
 /* Memory List */
 
-.memory-list-container {
-    width: 90%;
-    height: 93vh;
+.calendar-container {
+    width: 95%;
+    height: 6vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+}
+
+.calendar-btn {
+    display: flex;
+    padding: 6px 16px;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.calendar-icon {
+    margin-right: 0.5rem;
+}
+
+.react-datepicker {
+    position: absolute !important;
+    top: 3rem;
+    right: 0;
+    z-index: 1;
+}
+
+.memory-date-header {
+    text-align: center;
+    height: 5vh;
+    color: var(--mainRed);
+}
+
+.memory-table-container {
+    width: 95%;
+    height: 80vh;
     overflow-x: auto;
     margin: 0 auto;
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
 }
 
-.memory-list {
-    flex: 0 0 28%;
-    margin: 1rem;
+.table {
+    width: 100%;
+}
+
+.table-header th {
+    background-color: var(--mainBlue);
+    color: var(--pureWhite);
+    position: sticky;
+    top: 0;
+}
+
+.table-header th,
+.table-body td {
+    text-align: center;
     padding: 1rem;
-    border-radius: 0.5rem;
-    height: 150px;
-    background-color: var(--pureWhite);
-    box-shadow: 8px 8px 3px rgba(0, 0, 0, 0.12), 8px 8px 2px rgba(0, 0, 0, 0.24);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.memory-date-time-container {
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--mainBlack);
-}
-
-.memory-date-time-container span {
-    color: var(--mainRed);
-}
-
-.memory-name-container,
-.memory-amount-container {
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--mainBlack);
-    align-self: center;
-}
-
-.memory-name-container {
-    background-color: var(--mainWhite);
-    padding: 0 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    font-weight: bold;
+    font-size: 20px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.memory-amount-container span {
-    color: var(--mainRed);
+tr:hover {
+    background-color: var(--mainBlack);
+    color: var(--pureWhite);
 }
 
 @media screen and (max-width: 992px) {

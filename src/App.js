@@ -14,6 +14,9 @@ function App() {
     const [dataList, setDataList] = useState(localData);
     // Memory Data
     const [memoryList, setMemoryList] = useState(memoryData);
+    // DatePick Data Show
+    const [pickDateData, setPickDateData] = useState([]);
+
     // Name State
     const [name, setName] = useState("");
     // Amount State
@@ -26,6 +29,10 @@ function App() {
     const [confirm, setConfirm] = useState({ show: false });
     // Navbar State
     const [navbar, setNavbar] = useState({ home: true });
+    // Calender State
+    const [calendar, setCalendar] = useState({ date: new Date(), show: false });
+    // Memory List Show
+    const [memoryListShow, setMemoryListShow] = useState({ show: true });
 
     const handleDate = () => {
         const date = new Date().toJSON();
@@ -137,8 +144,21 @@ function App() {
         }
     };
 
-    const handleDel = () => {
-        setMemoryList([]);
+    // Calendar Button Handle
+    const handleCalendarButton = (e) => {
+        setCalendar({ ...calendar, show: !calendar.show });
+    };
+
+    // Calendar Handle
+    const handleCalendar = (value) => {
+        const pickDate = value;
+        setCalendar({ date: pickDate, show: !calendar.show });
+        const tempFilterData = memoryList.filter((list) => {
+            return new Date(list.date).toLocaleDateString() === new Date(pickDate).toLocaleDateString();
+        });
+        setPickDateData(tempFilterData);
+        setMemoryListShow({ show: false });
+        console.log(pickDateData);
     };
 
     // Local Storage Set
@@ -160,6 +180,9 @@ function App() {
                 edit,
                 confirm,
                 alert,
+                calendar,
+                pickDateData,
+                memoryListShow,
                 setName,
                 setAmount,
                 setDataList,
@@ -174,7 +197,8 @@ function App() {
                 handleConfirmCancle,
                 handleConfirmOk,
                 handleSubmit,
-                handleDel,
+                handleCalendarButton,
+                handleCalendar,
             }}
         >
             <div className="App">
