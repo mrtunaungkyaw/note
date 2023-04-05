@@ -56,37 +56,3 @@ export const List = () => {
         </div>
     );
 };
-
-// {pickDateData.length === 0
-//     ? memoryList.map((list) => {
-//           return (
-//               <div className="memory-list" key={list.id}>
-//                   <div className="memory-date-time-container">
-//                       <SetTime list={list} />
-//                       <SetDate list={list} />
-//                   </div>
-//                   <div className="memory-name-container">
-//                       <span>{list.name}</span>
-//                   </div>
-//                   <div className="memory-amount-container">
-//                       <span>{list.amount}</span> Kyat
-//                   </div>
-//               </div>
-//           );
-//       })
-//     : pickDateData.map((list) => {
-//           return (
-//               <div className="memory-list" key={list.id}>
-//                   <div className="memory-date-time-container">
-//                       <SetTime list={list} />
-//                       <SetDate list={list} />
-//                   </div>
-//                   <div className="memory-name-container">
-//                       <span>{list.name}</span>
-//                   </div>
-//                   <div className="memory-amount-container">
-//                       <span>{list.amount}</span> Kyat
-//                   </div>
-//               </div>
-//           );
-//       })}
