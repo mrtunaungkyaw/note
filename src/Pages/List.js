@@ -16,7 +16,11 @@ export const List = () => {
                 </button>
                 {calendar.show && <DatePick />}
             </div>
-            <h1 className="memory-date-header">{new Date(calendar.date).toLocaleDateString()}</h1>
+            {memoryListShow.show ? (
+                <h1 className="memory-date-header">All List</h1>
+            ) : (
+                <h1 className="memory-date-header">{new Date(calendar.date).toLocaleDateString()}</h1>
+            )}
             <div className="memory-table-container">
                 {memoryListShow.show && (
                     <table className="table">

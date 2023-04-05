@@ -28,12 +28,13 @@ function App() {
     // Confirm Box State
     const [confirm, setConfirm] = useState({ show: false });
     // Navbar State
-    const [navbar, setNavbar] = useState({ home: true });
+    const [navbar, setNavbar] = useState({ home: true, collapse: false });
     // Calender State
     const [calendar, setCalendar] = useState({ date: new Date(), show: false });
     // Memory List Show
     const [memoryListShow, setMemoryListShow] = useState({ show: true });
 
+    // Date Handle
     const handleDate = () => {
         const date = new Date().toJSON();
         return date;
@@ -51,12 +52,12 @@ function App() {
 
     // Navbar Home Handle
     const handleNavHome = () => {
-        setNavbar({ home: true });
+        setNavbar({ ...navbar, home: true, collapse: false });
     };
 
     // Navbar List Handle
     const handleNavList = () => {
-        setNavbar({ home: false });
+        setNavbar({ ...navbar, home: false, collapse: false });
     };
 
     // Alert Handle
@@ -161,6 +162,16 @@ function App() {
         console.log(pickDateData);
     };
 
+    // Navbar Toggler
+    const handleNavToggler = () => {
+        setNavbar({ ...navbar, collapse: true });
+    };
+
+    // Nabar Collapse Close
+    const handleNavCollapseClose = () => {
+        setNavbar({ ...navbar, collapse: false });
+    };
+
     // Local Storage Set
     useEffect(() => {
         localStorage.setItem("dataList", JSON.stringify(dataList));
@@ -183,6 +194,7 @@ function App() {
                 calendar,
                 pickDateData,
                 memoryListShow,
+                navbar,
                 setName,
                 setAmount,
                 setDataList,
@@ -199,6 +211,8 @@ function App() {
                 handleSubmit,
                 handleCalendarButton,
                 handleCalendar,
+                handleNavToggler,
+                handleNavCollapseClose,
             }}
         >
             <div className="App">
