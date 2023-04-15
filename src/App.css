@@ -484,14 +484,10 @@
 }
 
 .memory-date-header {
-    display: block;
-    position: absolute;
-    text-align: center;
-    top: 2rem;
-    right: 0;
-    left: 0;
     color: var(--mainRed);
     user-select: none;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .memory-table-container {
