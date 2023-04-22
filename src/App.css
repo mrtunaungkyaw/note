@@ -3,6 +3,7 @@
     --pureWhite: #ffffff;
     --mainBlack: #000000;
     --mainRed: #d72323;
+    --mainBlue: #482ff7;
 }
 
 * {
@@ -319,8 +320,9 @@
     align-items: center;
 }
 
-.icon-container .success {
-    display: none;
+.icon-container .save {
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .edit-icon,
@@ -450,82 +452,227 @@
 
 /* Memory List */
 
-.calendar-container {
-    width: 95%;
-    height: 6vh;
-    margin: 0 auto;
-    margin-bottom: 0.5rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-weight: bold;
-    position: relative;
-    user-select: none;
-}
-
-.calendar-btn {
+/* .calendar-btn {
     display: flex;
     padding: 6px 16px;
     justify-content: center;
     font-weight: bold;
     font-size: 18px;
     cursor: pointer;
+} */
+
+/* Table List Filter Item */
+
+.table-list-filter-container {
+    width: 95%;
+    height: 8vh;
+    margin: 0 auto;
+    background-color: var(--mainWhite);
+    padding: 0 1rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.table-list-filter {
+    display: flex;
+    align-items: center;
+}
+
+.all-list,
+.calendar-filter,
+.delete-filter,
+.print-filter {
+    margin-right: 1.5rem;
+}
+
+.search-filter-input {
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    background-color: transparent;
+}
+
+.all-list-btn,
+.calendar-filter-btn,
+.delete-filter-btn,
+.print-filter-btn {
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: var(--mainWhite);
+    padding: 0.5rem;
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    cursor: pointer;
+}
+
+.list-icon {
+    color: var(--mainBlack);
 }
 
 .calendar-icon {
+    color: #124e96;
+}
+
+.all-list-btn:hover,
+.calendar-filter-btn:hover,
+.delete-filter-btn:hover,
+.print-filter-btn:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.all-list-btn:active,
+.calendar-filter-btn:active,
+.delete-filter-btn:active,
+.print-filter-btn:active {
+    background-color: var(--mainRed);
+}
+
+.calendar-icon,
+.list-icon,
+.delete-icon,
+.print-icon {
     margin-right: 0.5rem;
+}
+
+.calendar-filter {
+    position: relative;
 }
 
 .react-datepicker {
     position: absolute !important;
-    top: 3rem;
-    right: 0;
     z-index: 1;
 }
 
-.memory-date-header {
-    color: var(--mainRed);
-    user-select: none;
-    font-size: 14px;
-    font-weight: bold;
-}
+/* Table */
 
 .memory-table-container {
-    width: 90%;
-    height: 85vh;
-    overflow-x: auto;
     margin: 0 auto;
+    width: 95%;
+    height: 80vh;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+    overflow-x: auto;
 }
 
 .table {
-    width: 100%;
     border-spacing: 0;
+    width: 100%;
 }
 
-.table-header th {
-    background-color: darkblue;
-    color: var(--pureWhite);
+.table-row-header th,
+.table-row-body td {
+    text-align: center;
+    padding: 0.8rem 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.table-row-header th {
+    color: var(--mainBlack);
+    background-color: cornflowerblue;
     position: sticky;
     top: 0;
 }
 
-.table-header th,
-.table-body td {
-    text-align: center;
-    padding: 0.8rem 1rem;
-    font-weight: bold;
-    font-size: 20px;
+.table-header-select {
+    width: 5%;
+}
+
+.table-header-date {
+    width: 15%;
+}
+
+.table-header-name {
+    width: 25%;
+}
+
+.table-header-amount {
+    width: 15%;
+}
+
+.table-amount {
+    text-align: end;
+}
+
+.table-header-action {
+    width: 40%;
+    text-align: start;
+}
+
+.table-body-action {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.table-body-amount {
+    text-align: end !important;
+}
+
+.kyat {
+    color: var(--mainRed);
+    font-size: 17px;
+}
+
+.checkbox {
     cursor: pointer;
 }
 
-.table tbody:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.12);
+.sort-icon {
+    margin-left: 0.5rem;
+    font-size: 17px;
+    color: black;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
 }
 
-.table .table-body:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+.sort-icon:hover {
+    transform: scale(1.3);
+}
+
+.table-row-body {
+    background-color: var(--pureWhite);
+    cursor: default;
+}
+
+.table-row-body td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table-row-body:hover {
+    background-color: var(--mainWhite);
+}
+
+.table-date {
+    display: flex;
+    justify-content: center;
+}
+
+.table-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.table-icon:hover {
+    transform: scale(1.1);
+}
+
+.edit {
+    color: blueviolet;
+}
+
+.delete {
+    color: var(--mainRed);
+}
+
+.print {
+    color: blue;
 }
 
 @media screen and (max-width: 992px) {

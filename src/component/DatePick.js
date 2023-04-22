@@ -5,14 +5,13 @@ import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 
 export const DatePick = () => {
-    const { calendar, handleCalendar } = useContext(AppContext);
+    const { state, dispatch, ACTION_TYPES } = useContext(AppContext);
     return (
         <>
             <DatePicker
-                className="calendar"
                 maxDate={new Date()}
-                selected={calendar.date}
-                onChange={handleCalendar}
+                selected={new Date(state.calendar.date)}
+                onChange={(value) => dispatch({ type: ACTION_TYPES.CALENDAR, payload: value })}
                 inline
             />
         </>

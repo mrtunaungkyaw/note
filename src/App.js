@@ -12,18 +12,21 @@ const memoryData = localStorage.getItem("memoryList") ? JSON.parse(localStorage.
 const ACTION_TYPES = {
     FORM_INPUT: "FORM_INPUT",
     SUBMIT: "SUBMIT",
-    EDIT_ICON: "EDIT_ICON",
+    EDIT_ITEM: "EDIT_ITEM",
     EDIT: "EDIT",
     DELETE_ITEM: "DELETE_ITEM",
+    SAVE_ITEM: "SAVE_ITEM",
     CONFIRM_CANCLE: "CONFIRM_CANCLE",
-    CONFIRM_OK: "CONFIRM_OK",
-    SAVE_MEMORY: "SAVE_MEMORY",
-    SAVE_DATA: "SAVE_DATA",
+    CONFIRM_DELETE: "CONFIRM_DELETE",
+    CONFIRM_SAVE: "CONFIRM_SAVE",
     CLEAR_ALL: "CLEAR_ALL",
+    CALENDAR_ITEM: "CALENDAR_ITEM",
+    CALENDAR: "CALENDAR",
 };
 
 const initinalState = {
     dataList: localData,
+    memoryList: memoryData,
     formInput: {},
     edit: { show: false },
     alert: {
@@ -40,15 +43,18 @@ const initinalState = {
         const date = new Date().toJSON();
         return date;
     },
+    calendar: { show: false },
 };
 
 const reducer = (state, action) => {
     switch (action.type) {
+        // Input Data
         case ACTION_TYPES.FORM_INPUT:
             return {
                 ...state,
                 formInput: { ...state.formInput, ...action.payload },
             };
+        // Submit Data
         case ACTION_TYPES.SUBMIT:
             return {
                 ...state,
@@ -63,12 +69,14 @@ const reducer = (state, action) => {
                 ],
                 formInput: {},
             };
-        case ACTION_TYPES.EDIT_ICON:
+        // Edit Item
+        case ACTION_TYPES.EDIT_ITEM:
             return {
                 ...state,
                 edit: { show: true, id: action.payload.id },
                 formInput: { ...state.formInput, name: action.payload.name, amount: action.payload.amount },
             };
+        // Edit
         case ACTION_TYPES.EDIT:
             return {
                 ...state,
@@ -85,30 +93,71 @@ const reducer = (state, action) => {
                 edit: { show: false },
                 formInput: {},
             };
+        // Delete Item
         case ACTION_TYPES.DELETE_ITEM:
             return {
                 ...state,
                 confirmBox: {
+                    ...state.confirmBox,
                     show: true,
+                    type: "delete",
                     id: action.payload.id,
                     text: `Are You Sure Delete This Item ("${action.payload.name}") `,
                 },
             };
+        // Save Item
+        case ACTION_TYPES.SAVE_ITEM:
+            return {
+                ...state,
+                confirmBox: {
+                    ...state.confirmBox,
+                    show: true,
+                    type: "save",
+                    id: action.payload.id,
+                    text: `Are You Sure Save This Item ("${action.payload.name}") `,
+                },
+            };
+        // Confirm Cancle
         case ACTION_TYPES.CONFIRM_CANCLE:
             return {
                 ...state,
                 confirmBox: { show: false },
             };
-        case ACTION_TYPES.CONFIRM_OK:
+        // Confirm Delete
+        case ACTION_TYPES.CONFIRM_DELETE:
             return {
                 ...state,
                 confirmBox: { ...state.confirmBox, show: false },
                 dataList: state.dataList.filter((list) => list.id !== state.confirmBox.id),
             };
+        // Confirm Save
+        case ACTION_TYPES.CONFIRM_SAVE:
+            return {
+                ...state,
+                confirmBox: { ...state.confirmBox, show: false },
+                memoryList: [...state.memoryList, ...state.dataList.filter((list) => list.id === state.confirmBox.id)],
+                dataList: [
+                    ...state.dataList.map((list) =>
+                        list.id === state.confirmBox.id ? { ...list, type: "save" } : list
+                    ),
+                ],
+            };
+        // Clear All
         case ACTION_TYPES.CLEAR_ALL:
             return {
                 ...state,
                 dataList: [],
+            };
+        // Calendar
+        case ACTION_TYPES.CALENDAR_ITEM:
+            return {
+                ...state,
+                calendar: { ...state.calendar, show: !state.calendar.show },
+            };
+        case ACTION_TYPES.CALENDAR:
+            return {
+                ...state,
+                calendar: { ...state.calendar, date: action.payload, show: !state.calendar.show },
             };
         default:
             return state;
@@ -117,9 +166,7 @@ const reducer = (state, action) => {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initinalState);
-    // console.log(state);
-    // Memory Data
-    const [memoryList, setMemoryList] = useState(memoryData);
+    console.log(state);
     // DatePick Data Show
     const [pickDateData, setPickDateData] = useState([]);
 
@@ -127,8 +174,6 @@ function App() {
     const [alert, setAlert] = useState({ show: false });
     // Navbar State
     const [navbar, setNavbar] = useState({ home: true, collapse: false });
-    // Calender State
-    const [calendar, setCalendar] = useState({ date: new Date(), show: false });
     // Memory List Show
     const [memoryListShow, setMemoryListShow] = useState({ show: true });
 
@@ -150,35 +195,15 @@ function App() {
         }, 3000);
     };
 
-    // Save Handle
-    const handleSave = (id) => {
-        const tempSaveData = state.dataList.filter((list) => {
-            return list.id === id;
-        });
-        setMemoryList([...memoryList, ...tempSaveData]);
-        const tempDataList = state.dataList.map((list) => {
-            return list.id === id ? { ...list, type: "success" } : list;
-        });
-        // dispatch Save
-        dispatch({ type: ACTION_TYPES.SAVE_DATA, payload: tempDataList });
-        handleAlert({ type: "success", text: "Success Save Item" });
-    };
-
-    // Calendar Button Handle
-    const handleCalendarButton = (e) => {
-        setCalendar({ ...calendar, show: !calendar.show });
-    };
-
     // Calendar Handle
     const handleCalendar = (value) => {
         const pickDate = value;
-        setCalendar({ date: pickDate, show: !calendar.show });
-        const tempFilterData = memoryList.filter((list) => {
+        // setCalendar({ date: pickDate, show: !calendar.show });
+        const tempFilterData = state.memoryList.filter((list) => {
             return new Date(list.date).toLocaleDateString() === new Date(pickDate).toLocaleDateString();
         });
         setPickDateData(tempFilterData);
         setMemoryListShow({ show: false });
-        console.log(pickDateData);
     };
 
     // Navbar Toggler
@@ -197,8 +222,8 @@ function App() {
     }, [state.dataList]);
 
     useEffect(() => {
-        localStorage.setItem("memoryList", JSON.stringify(memoryList));
-    }, [memoryList]);
+        localStorage.setItem("memoryList", JSON.stringify(state.memoryList));
+    }, [state.memoryList]);
 
     return (
         <AppContext.Provider
@@ -206,17 +231,13 @@ function App() {
                 state,
                 ACTION_TYPES,
                 dispatch,
-                memoryList,
                 alert,
-                calendar,
                 pickDateData,
                 memoryListShow,
                 navbar,
                 handleAlert,
                 handleNavHome,
                 handleNavList,
-                handleSave,
-                handleCalendarButton,
                 handleCalendar,
                 handleNavToggler,
                 handleNavCollapseClose,

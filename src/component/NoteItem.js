@@ -5,7 +5,7 @@ import { MdDelete, MdEdit, MdSave } from "react-icons/md";
 import { SetTime } from "./Date";
 
 export const NoteItem = () => {
-    const { state, dispatch, ACTION_TYPES, handleSave } = useContext(AppContext);
+    const { state, dispatch, ACTION_TYPES } = useContext(AppContext);
 
     return (
         <>
@@ -30,13 +30,13 @@ export const NoteItem = () => {
                         </div>
                         <div className="icon-container">
                             <span
-                                onClick={() => dispatch({ type: ACTION_TYPES.EDIT_ICON, payload: list })}
+                                onClick={() => dispatch({ type: ACTION_TYPES.EDIT_ITEM, payload: list })}
                                 className="edit-icon"
                             >
                                 <MdEdit className="icon" />
                             </span>
                             <span
-                                onClick={() => handleSave(list.id)}
+                                onClick={() => dispatch({ type: ACTION_TYPES.SAVE_ITEM, payload: list })}
                                 className={`save-icon ${list.type ? list.type : ""}`}
                             >
                                 <MdSave className="icon" />

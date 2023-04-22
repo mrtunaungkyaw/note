@@ -15,10 +15,15 @@ export const ConfirmBox = () => {
                     <button onClick={() => dispatch({ type: ACTION_TYPES.CONFIRM_CANCLE })} className="btn">
                         <MdClear className="icon" />
                     </button>
-                    <button onClick={() => dispatch({ type: ACTION_TYPES.CONFIRM_OK })} className="btn">
-                        <MdDone className="icon" />
-                    </button>
-                    {/* handleConfirmOk */}
+                    {state.confirmBox.type === "delete" ? (
+                        <button onClick={() => dispatch({ type: ACTION_TYPES.CONFIRM_DELETE })} className="btn">
+                            <MdDone className="icon" />
+                        </button>
+                    ) : (
+                        <button onClick={() => dispatch({ type: ACTION_TYPES.CONFIRM_SAVE })} className="btn">
+                            <MdDone className="icon" />
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
