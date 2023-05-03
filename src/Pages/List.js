@@ -1,85 +1,17 @@
 import React, { useContext } from "react";
 import { AppContext } from "../Helper/Context";
-import { SetDate, SetTime } from "../component/Date";
-import { MdDelete, MdEdit, MdPrint } from "react-icons/md";
-import { FaSortNumericDown, FaSortNumericUpAlt } from "react-icons/fa";
-import { PickDateDataComponent } from "../component/PickDateDataComponent";
 import { TableFilter } from "../component/TableFilter";
+import { TableList } from "../component/TableList";
 
 export const List = () => {
-    const { state, pickDateData } = useContext(AppContext);
+    // const { state } = useContext(AppContext);
     return (
         <>
-            <TableFilter />
+            <div className="table-list-filter-container">
+                <TableFilter />
+            </div>
             <div className="memory-table-container">
-                <table className="table">
-                    <thead>
-                        <tr className="table-row-header">
-                            <th className="table-header-select">
-                                <div className="table-select">
-                                    <span>
-                                        <input className="checkbox" type="checkbox" />
-                                    </span>
-                                </div>
-                            </th>
-                            <th className="table-header-date">
-                                <div className="table-date">
-                                    <span>Date</span>
-                                    <span className="sort-icon">
-                                        {/* <FaSortNumericDown /> */}
-                                        <FaSortNumericUpAlt />
-                                    </span>
-                                </div>
-                            </th>
-                            <th className="table-header-name">
-                                <div className="table-name">
-                                    <span>Customer Name</span>
-                                </div>
-                            </th>
-                            <th className="tabl-header-amount">
-                                <div className="table-amount">
-                                    <span>Amount</span>
-                                </div>
-                            </th>
-
-                            <th className="table-header-action">
-                                <div className="table-aciton">
-                                    <span>Action</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {state.memoryList.map((list) => {
-                            return (
-                                <tr className="table-row-body" key={list.id}>
-                                    <td>
-                                        <input className="checkbox" type="checkbox" />
-                                    </td>
-                                    <td className="table-body-date">{new Date(list.date).toLocaleDateString()}</td>
-                                    <td>{list.name}</td>
-                                    <td className="table-body-amount">
-                                        {list.amount} <span className="kyat">Kyat</span>
-                                    </td>
-
-                                    <td className="table-body-action-container">
-                                        <div className="table-body-action">
-                                            <span>
-                                                <MdEdit className="table-icon edit" />
-                                            </span>
-                                            <span>
-                                                <MdDelete className="table-icon delete" />
-                                            </span>
-                                            <span>
-                                                <MdPrint className="table-icon print" />
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                <TableList />
             </div>
         </>
     );

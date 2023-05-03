@@ -22,11 +22,16 @@ const ACTION_TYPES = {
     CLEAR_ALL: "CLEAR_ALL",
     CALENDAR_ITEM: "CALENDAR_ITEM",
     CALENDAR: "CALENDAR",
+    ALL_LIST: "ALL_LIST",
+    CHECKBOX_SELECT_ALL: "CHECKBOX_SELECT_ALL",
+    CHECKBOX_SELECT_ITEM: "CHECKBOX_SELECT_ITEM",
 };
 
 const initinalState = {
     dataList: localData,
     memoryList: memoryData,
+    memoryListDateFilter: [],
+    dateFilter: { show: false },
     formInput: {},
     edit: { show: false },
     alert: {
@@ -44,9 +49,11 @@ const initinalState = {
         return date;
     },
     calendar: { show: false },
+    checkbox: {},
 };
 
 const reducer = (state, action) => {
+    console.log(action.payload);
     switch (action.type) {
         // Input Data
         case ACTION_TYPES.FORM_INPUT:
@@ -148,17 +155,49 @@ const reducer = (state, action) => {
                 ...state,
                 dataList: [],
             };
-        // Calendar
+        // All List
+        case ACTION_TYPES.ALL_LIST:
+            return {
+                ...state,
+                dateFilter: { ...state.dateFilter, show: false },
+                calendar: { show: false },
+            };
+        // Calendar Item
         case ACTION_TYPES.CALENDAR_ITEM:
             return {
                 ...state,
                 calendar: { ...state.calendar, show: !state.calendar.show },
             };
+        // Calendar
         case ACTION_TYPES.CALENDAR:
             return {
                 ...state,
                 calendar: { ...state.calendar, date: action.payload, show: !state.calendar.show },
+                dateFilter: { ...state.dateFilter, show: true },
+                allList: { ...state.allList, show: true },
+                memoryListDateFilter: [
+                    ...state.memoryList.filter((list) => {
+                        return (
+                            new Date(list.date).toLocaleDateString() === new Date(action.payload).toLocaleDateString()
+                        );
+                    }),
+                ],
             };
+        case ACTION_TYPES.CHECKBOX_SELECT_ALL:
+            return {
+                ...state,
+                memoryList: state.memoryList.map((list) => {
+                    return { ...list, isChecked: action.payload.checked };
+                }),
+            };
+        case ACTION_TYPES.CHECKBOX_SELECT_ITEM:
+            return {
+                ...state,
+                memoryList: state.memoryList.map((list) => {
+                    return list.name === action.payload.name ? { ...list, isChecked: action.payload.checked } : list;
+                }),
+            };
+
         default:
             return state;
     }
@@ -166,16 +205,14 @@ const reducer = (state, action) => {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initinalState);
-    console.log(state);
+    // console.log(state);
     // DatePick Data Show
-    const [pickDateData, setPickDateData] = useState([]);
 
     // Alert State
     const [alert, setAlert] = useState({ show: false });
     // Navbar State
     const [navbar, setNavbar] = useState({ home: true, collapse: false });
     // Memory List Show
-    const [memoryListShow, setMemoryListShow] = useState({ show: true });
 
     // Navbar Home Handle
     const handleNavHome = () => {
@@ -196,15 +233,15 @@ function App() {
     };
 
     // Calendar Handle
-    const handleCalendar = (value) => {
-        const pickDate = value;
-        // setCalendar({ date: pickDate, show: !calendar.show });
-        const tempFilterData = state.memoryList.filter((list) => {
-            return new Date(list.date).toLocaleDateString() === new Date(pickDate).toLocaleDateString();
-        });
-        setPickDateData(tempFilterData);
-        setMemoryListShow({ show: false });
-    };
+    // const handleCalendar = (value) => {
+    //     // const pickDate = value;
+    //     // // setCalendar({ date: pickDate, show: !calendar.show });
+    //     // const tempFilterData = state.memoryList.filter((list) => {
+    //     //     return new Date(list.date).toLocaleDateString() === new Date(pickDate).toLocaleDateString();
+    //     // });
+    //     // setPickDateData(tempFilterData);
+    //     // setMemoryListShow({ show: false });
+    // };
 
     // Navbar Toggler
     const handleNavToggler = () => {
@@ -232,13 +269,10 @@ function App() {
                 ACTION_TYPES,
                 dispatch,
                 alert,
-                pickDateData,
-                memoryListShow,
                 navbar,
                 handleAlert,
                 handleNavHome,
                 handleNavList,
-                handleCalendar,
                 handleNavToggler,
                 handleNavCollapseClose,
             }}

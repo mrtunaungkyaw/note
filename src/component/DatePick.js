@@ -10,7 +10,6 @@ export const DatePick = () => {
         <>
             <DatePicker
                 maxDate={new Date()}
-                selected={new Date(state.calendar.date)}
                 onChange={(value) => dispatch({ type: ACTION_TYPES.CALENDAR, payload: value })}
                 inline
             />

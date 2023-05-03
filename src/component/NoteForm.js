@@ -78,7 +78,6 @@ export const NoteForm = () => {
                     >
                         Clear All
                         <MdDelete className="clear-all-icon" />
-                        {/* handleClearAll */}
                     </button>
                     <button className="btn save-all-btn">
                         Save All

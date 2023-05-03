@@ -76,6 +76,7 @@
     user-select: none;
     display: none;
     transition: all 0.5s ease-in-out;
+    z-index: 2;
 }
 
 .nav-collapse-close {
@@ -196,13 +197,13 @@
     outline: none;
     padding: 0 1rem;
     border-bottom: 1px solid var(--mainBlack);
-    border-radius: 0.6rem;
     transition: all 0.3s linear;
 }
 
 .form-control:focus {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     border: none;
+    border-radius: 0.6rem;
 }
 
 .btn-group {
@@ -450,17 +451,6 @@
     color: var(--mainRed);
 }
 
-/* Memory List */
-
-/* .calendar-btn {
-    display: flex;
-    padding: 6px 16px;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
-} */
-
 /* Table List Filter Item */
 
 .table-list-filter-container {
@@ -549,6 +539,11 @@
     z-index: 1;
 }
 
+.all {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 /* Table */
 
 .memory-table-container {
@@ -563,6 +558,13 @@
 .table {
     border-spacing: 0;
     width: 100%;
+}
+
+.no-list {
+    text-align: center;
+    position: relative;
+    top: 10rem;
+    color: var(--mainRed);
 }
 
 .table-row-header th,

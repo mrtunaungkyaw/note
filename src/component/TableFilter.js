@@ -7,10 +7,13 @@ export const TableFilter = () => {
     const { state, dispatch, ACTION_TYPES } = useContext(AppContext);
 
     return (
-        <div className="table-list-filter-container">
+        <>
             <div className="table-list-filter">
                 <div className="all-list">
-                    <button className="all-list-btn">
+                    <button
+                        onClick={() => dispatch({ type: ACTION_TYPES.ALL_LIST })}
+                        className={`all-list-btn ${state.dateFilter.show ? "" : "all"}`}
+                    >
                         <MdList className="list-icon" />
                         <span>All List</span>
                     </button>
@@ -41,6 +44,6 @@ export const TableFilter = () => {
             <div className="search-filter">
                 <input className="search-filter-input" type="text" placeholder="e.g. Tun Aung Kyaw" />
             </div>
-        </div>
+        </>
     );
 };
