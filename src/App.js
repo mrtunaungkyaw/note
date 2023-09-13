@@ -1,11 +1,11 @@
-import "./App.css";
 import { useEffect, useReducer, useState } from "react";
-import { reducer } from "./Helper/postReducer";
+import "./App.css";
 import { AppContext } from "./Helper/Context";
-import { Main } from "./Pages/Main";
-import { Navbar } from "./component/Navbar";
+import { reducer } from "./Helper/postReducer";
 import { List } from "./Pages/List";
+import { Main } from "./Pages/Main";
 import { ConfirmBox } from "./component/ConfirmBox";
+import { Navbar } from "./component/Navbar";
 const localData = localStorage.getItem("dataList") ? JSON.parse(localStorage.getItem("dataList")) : [];
 const memoryData = localStorage.getItem("memoryList") ? JSON.parse(localStorage.getItem("memoryList")) : [];
 
@@ -38,7 +38,6 @@ const initinalState = {
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initinalState);
-    console.log(state);
 
     // Alert State
     const [alert, setAlert] = useState({ show: false });
