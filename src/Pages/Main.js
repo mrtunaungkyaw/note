@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 import { NoteForm } from "../component/NoteForm";
 import { Alert } from "../component/Alert";
-import { ConfirmBox } from "../component/ConfirmBox";
 
 export const Main = () => {
     const { state } = useContext(AppContext);
@@ -20,7 +19,6 @@ export const Main = () => {
                 <main className="main-container">
                     <NoteForm />
                 </main>
-                {state.confirmBox.show && <ConfirmBox />}
                 <div className="total">
                     <h1>
                         Total :

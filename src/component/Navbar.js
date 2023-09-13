@@ -4,7 +4,8 @@ import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 
 export const Navbar = () => {
-    const { handleNavHome, handleNavList, navbar, handleNavToggler, handleNavCollapseClose } = useContext(AppContext);
+    const { state, handleNavHome, handleNavList, navbar, handleNavToggler, handleNavCollapseClose } =
+        useContext(AppContext);
     return (
         <nav className="nav">
             <div className={`navbar-container ${navbar.collapse ? "" : "navbar-container-show"}`}>

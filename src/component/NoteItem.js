@@ -1,11 +1,12 @@
 import React from "react";
+import { ACTION_TYPES } from "../Helper/postReducer";
 import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 import { MdDelete, MdEdit, MdSave } from "react-icons/md";
 import { SetTime } from "./Date";
 
 export const NoteItem = () => {
-    const { state, dispatch, ACTION_TYPES } = useContext(AppContext);
+    const { state, dispatch } = useContext(AppContext);
 
     return (
         <>

@@ -1,11 +1,12 @@
 import React from "react";
+import { ACTION_TYPES } from "../Helper/postReducer";
 import { NoteList } from "./NoteList";
 import { MdDelete, MdSend } from "react-icons/md";
 import { useContext } from "react";
 import { AppContext } from "../Helper/Context";
 
 export const NoteForm = () => {
-    const { state, dispatch, ACTION_TYPES, handleAlert } = useContext(AppContext);
+    const { state, dispatch, handleAlert } = useContext(AppContext);
 
     const handleInput = (e) => {
         const name = e.target.name;

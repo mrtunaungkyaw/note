@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
+import { ACTION_TYPES } from "../Helper/postReducer";
 import { AppContext } from "../Helper/Context";
 import { SetDate } from "../component/Date";
 import { FaSortNumericUpAlt } from "react-icons/fa";
 import { MdDelete, MdEdit, MdPrint } from "react-icons/md";
 import { FilterDate } from "../component/FilterDate";
+import { PrintData } from "../component/PrintData";
 
 export const TableList = () => {
-    const { state, ACTION_TYPES, dispatch } = useContext(AppContext);
+    const { state, dispatch } = useContext(AppContext);
 
     return (
         <>
@@ -35,7 +37,6 @@ export const TableList = () => {
                             <div className="table-date">
                                 <span>Date</span>
                                 <span className="sort-icon">
-                                    {/* <FaSortNumericDown /> */}
                                     <FaSortNumericUpAlt />
                                 </span>
                             </div>
@@ -61,6 +62,8 @@ export const TableList = () => {
                 <tbody>
                     {state.dateFilter.show ? (
                         <FilterDate />
+                    ) : state.print.show ? (
+                        <PrintData />
                     ) : state.memoryList.length === 0 ? (
                         <tr>
                             <td colSpan="7" className="no-list">
@@ -71,7 +74,7 @@ export const TableList = () => {
                     ) : (
                         state.memoryList.map((list) => {
                             return (
-                                <tr className="table-row-body" key={list.id}>
+                                <tr className={`table-row-body ${list.isChecked ? "check-item" : ""}`} key={list.id}>
                                     <td>
                                         <input
                                             className="checkbox"
